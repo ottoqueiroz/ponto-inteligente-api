@@ -1,0 +1,35 @@
+package com.ottoamaral.pontointeligente.api.repositories;
+
+import java.util.List;
+
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ottoamaral.pontointeligente.api.entities.Lancamento;
+
+/**
+ * O spring n vai conseguir realizar uma query, neste caso, criamos uma query
+ * específica;
+ * 
+ * @NamedQueries = pode-se criar inúmeras queries, definindo seu nome através do
+ *               nome da classe e método;
+ * 
+ *               Pageable = serve para paginar o resultado;
+ */
+
+@Transactional(readOnly = true)
+@NamedQueries({
+		@NamedQuery(name = "LancamentoRepository.findByFuncionarioId", query = "SELECT lanc FROM Lancamento lanc WHERE lanc.funcionario.id = :funcionarioId") })
+public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
+
+	List<Lancamento> findByFuncionarioId(@Param("funcionarioId") Long funcionarioId);
+
+	Page<Lancamento> findByFuncionarioId(@Param("funcionarioId") Long funcionarioId, Pageable pageable);
+
+}
