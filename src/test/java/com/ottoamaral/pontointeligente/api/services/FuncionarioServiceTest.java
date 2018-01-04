@@ -1,7 +1,6 @@
 package com.ottoamaral.pontointeligente.api.services;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
