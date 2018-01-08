@@ -75,15 +75,6 @@ public class Funcionario implements Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "senha", nullable = false)
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	@Column(name = "cpf", nullable = false)
 	public String getCpf() {
 		return cpf;
@@ -98,6 +89,11 @@ public class Funcionario implements Serializable {
 		return valorHora;
 	}
 
+	@Transient
+	public Optional<BigDecimal> getValorHoraOpt() {
+		return Optional.ofNullable(valorHora);
+	}
+
 	public void setValorHora(BigDecimal valorHora) {
 		this.valorHora = valorHora;
 	}
@@ -107,12 +103,6 @@ public class Funcionario implements Serializable {
 		return qtdHorasTrabalhoDia;
 	}
 
-	/**
-	 * 
-	 * @Transient = importante para fazer conversoes com o DTO
-	 * Além isso, significa que o JPA deve ignorar esse metodo e 
-	 * que n seja relacionado com o mapeamento do banco
-	 */
 	@Transient
 	public Optional<Float> getQtdHorasTrabalhoDiaOpt() {
 		return Optional.ofNullable(qtdHorasTrabalhoDia);
@@ -136,11 +126,6 @@ public class Funcionario implements Serializable {
 		this.qtdHorasAlmoco = qtdHorasAlmoco;
 	}
 
-	/**
-	 * 
-	 * @Enumerated = coloca o nome da role, entao, role_admin ou role_usuario;
-	 * ao invés de colocar um número 0 ou 1 ficando mais difícil de visualizar
-	 */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "perfil", nullable = false)
 	public PerfilEnum getPerfil() {
@@ -169,12 +154,15 @@ public class Funcionario implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	/**
-	 * 
-	 * @ManyToOne = muitos funcionários para um empresa;
-	 * FetchType.EAGER = sempre que carregar funcionarios eu já quero os dados da empresa
-	 */
-	
+	@Column(name = "senha", nullable = false)
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	public Empresa getEmpresa() {
 		return empresa;
